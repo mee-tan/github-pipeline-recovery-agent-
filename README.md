@@ -65,48 +65,7 @@ An `__init__.py` file (even empty) tells Python "this folder is an importable pa
 
 ## 6. Writing `pyproject.toml`
 This file declares the project's name, dependencies, and tool configs (linter, test runner) in one place.
-```toml
-[project]
-name = "github-pipeline-recovery-agent"
-version = "0.1.0"
-description = "Event-driven agentic CI failure recovery system"
-requires-python = ">=3.12"
-dependencies = [
-    "fastapi>=0.115",
-    "uvicorn[standard]>=0.30",
-    "pydantic>=2.7",
-    "httpx>=0.27",
-    "langgraph>=0.2",
-    "langchain-core>=0.3",
-    "PyJWT>=2.9",
-    "cryptography>=43.0",
-    "sqlalchemy>=2.0",
-]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0",
-    "pytest-asyncio>=0.24",
-    "pytest-cov>=5.0",
-    "ruff>=0.6",
-    "respx>=0.21",
-]
-
-[tool.ruff]
-line-length = 100
-target-version = "py312"
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-asyncio_mode = "auto"
-
-[build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
-```
 - **`dependencies`** — what the app needs to *run*.
 - **`optional-dependencies.dev`** — tools needed only to *develop* (test runner, linter), installed via `pip install -e ".[dev]"`.
 - **`tool.ruff`** — linter config; `select` turns on error checks, unused-import detection, import sorting, modern-syntax hints, and common bug patterns.
@@ -128,22 +87,7 @@ pip install -e ".[dev]"
 
 ## 9. Write the FastAPI app
 `app/api/main.py`:
-```python
-"""FastAPI application entrypoint.
 
-Phase 1 only exposes a health endpoint. The webhook route, signature
-verification, and event queueing land in Phase 3.
-"""
-
-from fastapi import FastAPI
-
-app = FastAPI(title="GitHub Pipeline Recovery Agent")
-
-
-@app.get("/healthz")
-async def healthz() -> dict[str, str]:
-    return {"status": "ok"}
-```
 A health endpoint is the smallest possible slice that proves the whole chain works: FastAPI is installed, the package imports cleanly, and later, CI/deploy tooling has something to check.
 
 ## 10. Run it and check manually
@@ -158,19 +102,7 @@ curl http://localhost:8000/healthz
 
 ## 11. Write an automated test
 `tests/unit/test_health.py`:
-```python
-from fastapi.testclient import TestClient
 
-from app.api.main import app
-
-client = TestClient(app)
-
-
-def test_healthz_returns_ok():
-    response = client.get("/healthz")
-    assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
-```
 `TestClient` runs the app in-process — no real server, no network. This replaces manually curling the endpoint with something that runs automatically forever.
 
 ## 12. Run pytest
@@ -207,6 +139,11 @@ git commit -m "Phase 1: project scaffolding, health endpoint, CI"
 git push
 ```
 Then check the **Actions** tab on GitHub — a workflow run should start automatically. Watch it once end-to-end so you know what CI actually does under the hood.
+
+
+so far this is how the Actions tab looks everything seems to work fine 
+
+<img width="1184" height="489" alt="Screenshot 2026-09-25 at 6 57 54 PM" src="https://github.com/user-attachments/assets/25523448-5bc2-4bd3-811f-69be9e983447" />
 
 ---
 ---
