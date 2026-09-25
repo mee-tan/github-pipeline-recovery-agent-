@@ -1,2 +1,1 @@
-# github-pipeline-recovery-agent-
-This repository is for the agent itself in the Agentic AI github pipeline recovery project 
+The GitHub Pipeline Recovery Agent is an Agentic AI system that responds automatically to failed GitHub Actions workflows. When a pipeline failure occurs, the agent collects relevant logs and code changes, investigates the likely cause, selects appropriate diagnostic tools, and prepares a recommended fix. Where possible, it validates the proposed solution by running tests and creates a draft pull request for developer approval. The project demonstrates event-driven architecture, CI/CD integration, autonomous tool selection, software testing, AI evaluation, and human-in-the-loop control.
