@@ -1,0 +1,231 @@
+test	Set up job	﻿2026-11-12T23:05:31.3101407Z Current runner version: '2.338.2'
+test	Set up job	2026-11-12T23:05:31.3128199Z ##[group]Runner Image Provisioner
+test	Set up job	2026-11-12T23:05:31.3129089Z Hosted Compute Agent
+test	Set up job	2026-11-12T23:05:31.3129723Z Version: 20261103.629
+test	Set up job	2026-11-12T23:05:31.3130498Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+test	Set up job	2026-11-12T23:05:31.3131249Z Build Date: 2026-11-03T17:26:59Z
+test	Set up job	2026-11-12T23:05:31.3132005Z Worker ID: {b851942e-2f49-4c3f-93eb-6b07c1008873}
+test	Set up job	2026-11-12T23:05:31.3132735Z Region: eastus
+test	Set up job	2026-11-12T23:05:31.3133294Z Cloud: Azure
+test	Set up job	2026-11-12T23:05:31.3134111Z ##[endgroup]
+test	Set up job	2026-11-12T23:05:31.3135670Z ##[group]Operating System
+test	Set up job	2026-11-12T23:05:31.3136309Z Ubuntu
+test	Set up job	2026-11-12T23:05:31.3137032Z 24.04.5
+test	Set up job	2026-11-12T23:05:31.3137546Z LTS
+test	Set up job	2026-11-12T23:05:31.3138142Z ##[endgroup]
+test	Set up job	2026-11-12T23:05:31.3138723Z ##[group]Runner Image
+test	Set up job	2026-11-12T23:05:31.3139387Z Image: ubuntu-24.04
+test	Set up job	2026-11-12T23:05:31.3140034Z Version: 20261111.370.1
+test	Set up job	2026-11-12T23:05:31.3141105Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+test	Set up job	2026-11-12T23:05:31.3142931Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+test	Set up job	2026-11-12T23:05:31.3144302Z ##[endgroup]
+test	Set up job	2026-11-12T23:05:31.3146082Z ##[group]GITHUB_TOKEN Permissions
+test	Set up job	2026-11-12T23:05:31.3148280Z Contents: read
+test	Set up job	2026-11-12T23:05:31.3149021Z Metadata: read
+test	Set up job	2026-11-12T23:05:31.3149598Z Packages: read
+test	Set up job	2026-11-12T23:05:31.3150185Z ##[endgroup]
+test	Set up job	2026-11-12T23:05:31.3152511Z Secret source: Actions
+test	Set up job	2026-11-12T23:05:31.3153600Z Cache mode: write
+test	Set up job	2026-11-12T23:05:31.3154754Z Prepare workflow directory
+test	Set up job	2026-11-12T23:05:31.3482725Z Prepare all required actions
+test	Set up job	2026-11-12T23:05:31.3531596Z Getting action download info
+test	Set up job	2026-11-12T23:05:31.5740877Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+test	Set up job	2026-11-12T23:05:31.6835512Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+test	Set up job	2026-11-12T23:05:31.9225466Z Complete job name: test
+test	Run actions/checkout@v4	﻿2026-11-12T23:05:32.0100208Z ##[group]Run actions/checkout@v4
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0101127Z with:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0101658Z   repository: mee-tan/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0105893Z   token: ***
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0106340Z   ssh-strict: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0106785Z   ssh-user: git
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0107238Z   persist-credentials: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0107722Z   clean: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0108168Z   sparse-checkout-cone-mode: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0108686Z   fetch-depth: 1
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0109108Z   fetch-tags: false
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0109557Z   show-progress: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0110017Z   lfs: false
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0110435Z   submodules: false
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0110887Z   set-safe-directory: true
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0111394Z   allow-unsafe-pr-checkout: false
+test	Run actions/checkout@v4	2026-11-12T23:05:32.0112180Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3088600Z Syncing repository: mee-tan/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3092045Z ##[group]Getting Git version info
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3094530Z Working directory is '/home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target'
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3097228Z [command]/usr/bin/git version
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3196833Z git version 2.56.1
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3226065Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3241820Z Temporarily overriding HOME='/home/runner/work/_temp/b55ef458-5dfb-4f73-9adc-30c076753802' before making global git config changes
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3245733Z Adding repository directory to the temporary git global config as a safe directory
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3250598Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3351598Z Deleting the contents of '/home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target'
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3355240Z ##[group]Initializing the repository
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3378236Z [command]/usr/bin/git init /home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3518899Z hint: Using 'master' as the name for the initial branch. This default branch name
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3521633Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3524211Z hint: to use in all of your new repositories, which will suppress this warning,
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3526154Z hint: call:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3528439Z hint:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3529976Z hint: 	git config --global init.defaultBranch <name>
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3533208Z hint:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3535168Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3538573Z hint: 'development'. The just-created branch can be renamed via this command:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3541088Z hint:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3542440Z hint: 	git branch -m <name>
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3543885Z hint:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3546021Z hint: Disable this message with "git config set advice.defaultBranchName false"
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3549648Z Initialized empty Git repository in /home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target/.git/
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3555544Z [command]/usr/bin/git remote add origin https://github.com/mee-tan/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3636567Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3638649Z ##[group]Disabling automatic garbage collection
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3640376Z [command]/usr/bin/git config --local gc.auto 0
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3725532Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3742529Z ##[group]Setting up auth
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3744508Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test	Run actions/checkout@v4	2026-11-12T23:05:32.3767863Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4191413Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4237604Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4503795Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4549685Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4798045Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4857512Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4858596Z ##[group]Fetching the repository
+test	Run actions/checkout@v4	2026-11-12T23:05:32.4871272Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +14331f8e0ade335d879197db0118c1cdc564f42c:refs/remotes/origin/seed/import-error
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6903281Z From https://github.com/mee-tan/demo-repo-recovery-agent-target
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6906217Z  * [new ref]         14331f8e0ade335d879197db0118c1cdc564f42c -> origin/seed/import-error
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6910780Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6912582Z ##[group]Determining the checkout info
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6914905Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6917499Z [command]/usr/bin/git sparse-checkout disable
+test	Run actions/checkout@v4	2026-11-12T23:05:32.6992211Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7040117Z ##[group]Checking out the ref
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7044987Z [command]/usr/bin/git checkout --progress --force -B seed/import-error refs/remotes/origin/seed/import-error
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7113614Z Switched to a new branch 'seed/import-error'
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7119474Z branch 'seed/import-error' set up to track 'origin/seed/import-error'.
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7125033Z ##[endgroup]
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7172983Z [command]/usr/bin/git log -1 --format=%H
+test	Run actions/checkout@v4	2026-11-12T23:05:32.7207090Z 14331f8e0ade335d879197db0118c1cdc564f42c
+test	Run actions/setup-python@v5	﻿2026-11-12T23:05:32.7565102Z ##[group]Run actions/setup-python@v5
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7565935Z with:
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7566418Z   python-version: 3.12
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7567025Z   check-latest: false
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7576699Z   token: ***
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7577238Z   update-environment: true
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7577915Z   allow-prereleases: false
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7578572Z   freethreaded: false
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.7579141Z ##[endgroup]
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.8991084Z ##[group]Installed versions
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.9096705Z (node:2344) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.9100974Z (Use `node --trace-deprecation ...` to show where the warning was created)
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.9103312Z Successfully set up CPython (3.12.16)
+test	Run actions/setup-python@v5	2026-11-12T23:05:32.9105953Z ##[endgroup]
+test	Install dependencies	﻿2026-11-12T23:05:32.9410999Z ##[group]Run pip install -e ".[dev]"
+test	Install dependencies	2026-11-12T23:05:32.9413416Z ^[[36;1mpip install -e ".[dev]"^[[0m
+test	Install dependencies	2026-11-12T23:05:32.9462249Z shell: /usr/bin/bash -e {0}
+test	Install dependencies	2026-11-12T23:05:32.9464282Z env:
+test	Install dependencies	2026-11-12T23:05:32.9465953Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Install dependencies	2026-11-12T23:05:32.9468887Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+test	Install dependencies	2026-11-12T23:05:32.9471812Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Install dependencies	2026-11-12T23:05:32.9474350Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Install dependencies	2026-11-12T23:05:32.9476221Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Install dependencies	2026-11-12T23:05:32.9478275Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+test	Install dependencies	2026-11-12T23:05:32.9480118Z ##[endgroup]
+test	Install dependencies	2026-11-12T23:05:33.8931942Z Obtaining file:///home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target
+test	Install dependencies	2026-11-12T23:05:33.8947276Z   Installing build dependencies: started
+test	Install dependencies	2026-11-12T23:05:34.9474601Z   Installing build dependencies: finished with status 'done'
+test	Install dependencies	2026-11-12T23:05:34.9478737Z   Checking if build backend supports build_editable: started
+test	Install dependencies	2026-11-12T23:05:35.5218950Z   Checking if build backend supports build_editable: finished with status 'done'
+test	Install dependencies	2026-11-12T23:05:35.5226392Z   Getting requirements to build editable: started
+test	Install dependencies	2026-11-12T23:05:35.9098344Z   Getting requirements to build editable: finished with status 'done'
+test	Install dependencies	2026-11-12T23:05:35.9108026Z   Preparing editable metadata (pyproject.toml): started
+test	Install dependencies	2026-11-12T23:05:36.1087527Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+test	Install dependencies	2026-11-12T23:05:36.2072542Z Collecting pytest>=8.0 (from calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:36.3573867Z   Downloading pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+test	Install dependencies	2026-11-12T23:05:36.7715056Z Collecting ruff>=0.6 (from calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:36.8109883Z   Downloading ruff-0.17.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+test	Install dependencies	2026-11-12T23:05:36.8400372Z Collecting iniconfig>=2 (from pytest>=8.0->calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:36.8799408Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+test	Install dependencies	2026-11-12T23:05:36.9004566Z Collecting packaging>=24 (from pytest>=8.0->calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:36.9409048Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+test	Install dependencies	2026-11-12T23:05:36.9588251Z Collecting pluggy<2,>=1.6 (from pytest>=8.0->calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:36.9997115Z   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+test	Install dependencies	2026-11-12T23:05:37.0235675Z Collecting pygments>=2.15 (from pytest>=8.0->calculator==0.1.0)
+test	Install dependencies	2026-11-12T23:05:37.0621545Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies	2026-11-12T23:05:37.1059328Z Downloading pytest-9.2.0-py3-none-any.whl (411 kB)
+test	Install dependencies	2026-11-12T23:05:37.2632258Z Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+test	Install dependencies	2026-11-12T23:05:37.3062814Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+test	Install dependencies	2026-11-12T23:05:37.3475105Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+test	Install dependencies	2026-11-12T23:05:37.3914044Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+test	Install dependencies	2026-11-12T23:05:37.4533739Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 19.5 MB/s  0:00:00
+test	Install dependencies	2026-11-12T23:05:37.4920909Z Downloading ruff-0.17.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.6 MB)
+test	Install dependencies	2026-11-12T23:05:37.6721647Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.6/10.6 MB 58.7 MB/s  0:00:00
+test	Install dependencies	2026-11-12T23:05:37.7014679Z Building wheels for collected packages: calculator
+test	Install dependencies	2026-11-12T23:05:37.7023151Z   Building editable for calculator (pyproject.toml): started
+test	Install dependencies	2026-11-12T23:05:37.9176755Z   Building editable for calculator (pyproject.toml): finished with status 'done'
+test	Install dependencies	2026-11-12T23:05:37.9180704Z   Created wheel for calculator: filename=calculator-0.1.0-0.editable-py3-none-any.whl size=1292 sha256=14ad2a47d657f6d3fa538e4bd911e09dabf02a479316993f7a2eba89de80544c
+test	Install dependencies	2026-11-12T23:05:37.9182887Z   Stored in directory: /tmp/pip-ephem-wheel-cache-kvvwznlj/wheels/ea/31/ea/dc4f4024c8d3b93ae55ccb337cab3f28414501c1da6b083590
+test	Install dependencies	2026-11-12T23:05:37.9196442Z Successfully built calculator
+test	Install dependencies	2026-11-12T23:05:37.9466542Z Installing collected packages: ruff, pygments, pluggy, packaging, iniconfig, calculator, pytest
+test	Install dependencies	2026-11-12T23:05:39.2988516Z 
+test	Install dependencies	2026-11-12T23:05:39.3004802Z Successfully installed calculator-0.1.0 iniconfig-2.3.1 packaging-26.3 pluggy-1.7.0 pygments-2.21.0 pytest-9.2.0 ruff-0.17.5
+test	Lint	﻿2026-11-12T23:05:39.3757000Z ##[group]Run ruff check .
+test	Lint	2026-11-12T23:05:39.3757314Z ^[[36;1mruff check .^[[0m
+test	Lint	2026-11-12T23:05:39.3779024Z shell: /usr/bin/bash -e {0}
+test	Lint	2026-11-12T23:05:39.3779279Z env:
+test	Lint	2026-11-12T23:05:39.3779546Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Lint	2026-11-12T23:05:39.3779985Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+test	Lint	2026-11-12T23:05:39.3780411Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Lint	2026-11-12T23:05:39.3780779Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Lint	2026-11-12T23:05:39.3781149Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Lint	2026-11-12T23:05:39.3781521Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+test	Lint	2026-11-12T23:05:39.3781847Z ##[endgroup]
+test	Lint	2026-11-12T23:05:39.3891936Z All checks passed!
+test	Test	﻿2026-11-12T23:05:39.3929458Z ##[group]Run pytest
+test	Test	2026-11-12T23:05:39.3929709Z ^[[36;1mpytest^[[0m
+test	Test	2026-11-12T23:05:39.3949833Z shell: /usr/bin/bash -e {0}
+test	Test	2026-11-12T23:05:39.3950080Z env:
+test	Test	2026-11-12T23:05:39.3950344Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Test	2026-11-12T23:05:39.3950769Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+test	Test	2026-11-12T23:05:39.3951185Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Test	2026-11-12T23:05:39.3951565Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Test	2026-11-12T23:05:39.3951945Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+test	Test	2026-11-12T23:05:39.3952323Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+test	Test	2026-11-12T23:05:39.3952646Z ##[endgroup]
+test	Test	2026-11-12T23:05:40.0037518Z ============================= test session starts ==============================
+test	Test	2026-11-12T23:05:40.0038635Z platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+test	Test	2026-11-12T23:05:40.0039387Z rootdir: /home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target
+test	Test	2026-11-12T23:05:40.0040053Z configfile: pyproject.toml
+test	Test	2026-11-12T23:05:40.0040360Z collected 0 items / 1 error
+test	Test	2026-11-12T23:05:40.0040545Z 
+test	Test	2026-11-12T23:05:40.0040734Z ==================================== ERRORS ====================================
+test	Test	2026-11-12T23:05:40.0041268Z ______________________ ERROR collecting tests/test_ops.py ______________________
+test	Test	2026-11-12T23:05:40.0042215Z ImportError while importing test module '/home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target/tests/test_ops.py'.
+test	Test	2026-11-12T23:05:40.0043337Z Hint: make sure your test modules/packages have valid Python names.
+test	Test	2026-11-12T23:05:40.0044341Z Traceback:
+test	Test	2026-11-12T23:05:40.0045208Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/importlib/__init__.py:90: in import_module
+test	Test	2026-11-12T23:05:40.0046372Z     return _bootstrap._gcd_import(name[level:], package, level)
+test	Test	2026-11-12T23:05:40.0047581Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test	Test	2026-11-12T23:05:40.0048163Z tests/test_ops.py:3: in <module>
+test	Test	2026-11-12T23:05:40.0048706Z     from calculator.ops import add, divide, multiply, subtract
+test	Test	2026-11-12T23:05:40.0050096Z E   ImportError: cannot import name 'subtract' from 'calculator.ops' (/home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target/src/calculator/ops.py)
+test	Test	2026-11-12T23:05:40.0051340Z =========================== short test summary info ============================
+test	Test	2026-11-12T23:05:40.0051722Z ERROR tests/test_ops.py
+test	Test	2026-11-12T23:05:40.0052062Z !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+test	Test	2026-11-12T23:05:40.0052509Z =============================== 1 error in 0.11s ===============================
+test	Test	2026-11-12T23:05:40.0278517Z ##[error]Process completed with exit code 2.
+test	Post Run actions/checkout@v4	﻿2026-11-12T23:05:40.0425838Z Post job cleanup.
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1299802Z [command]/usr/bin/git version
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1340253Z git version 2.56.1
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1415440Z Temporarily overriding HOME='/home/runner/work/_temp/9259e70e-2324-4b11-82b6-137a4f6c7c8a' before making global git config changes
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1416900Z Adding repository directory to the temporary git global config as a safe directory
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1422434Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/demo-repo-recovery-agent-target/demo-repo-recovery-agent-target
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1474145Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1517175Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1847773Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1895076Z http.https://github.com/.extraheader
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1913866Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.1987188Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.2303107Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test	Post Run actions/checkout@v4	2026-11-12T23:05:40.2359838Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test	Complete job	﻿2026-11-12T23:05:40.2810564Z Cleaning up orphan processes
+test	Complete job	2026-11-12T23:05:40.3183298Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
