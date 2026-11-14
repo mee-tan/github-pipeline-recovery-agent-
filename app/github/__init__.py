@@ -1,1 +1,1 @@
-#GitHub App authentication and REST API adapters.")
+"""GitHub App authentication and REST API adapters."""
