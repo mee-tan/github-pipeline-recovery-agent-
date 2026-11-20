@@ -132,15 +132,25 @@ ruff check .
 **Run a recovery on a saved failed log:**
 
 ```bash
-python -m app.cli tests/fixtures/logs/logic_bug.log
+python -m app.cli --log tests/fixtures/logs/logic_bug.log
 ```
 
 The agent reads the log, finds the failing step, diagnoses the failure, and, because patch generation is not built yet, stops honestly with a `diagnosis_only` report and its audit log.
 
+**Run a recovery on a real failed run on GitHub** (read-only; uses the token from the GitHub CLI):
+
+```bash
+export GITHUB_TOKEN=$(gh auth token)
+gh run list --repo mee-tan/demo-repo-recovery-agent-target --branch seed/logic-bug --limit 1
+python -m app.cli --run-id <RUN_ID>
+```
+
+The agent downloads the failed job's log and the branch's changes, and cites both as evidence. Never commit or print the token.
+
 **Watch the full path, including the pause for human approval**, using clearly labelled fakes for the stages not built yet:
 
 ```bash
-python -m app.cli tests/fixtures/logs/lint_unused_import.log --demo-fake-fix
+python -m app.cli --log tests/fixtures/logs/lint_unused_import.log --demo-fake-fix
 ```
 
 It pauses and asks you to type `approve` or `reject`. Nothing is changed on GitHub.
@@ -164,8 +174,8 @@ curl http://localhost:8000/healthz      # {"status":"ok"}
 | Stage B (5.2) | Secret redaction | Done (Nov 12) |
 | Stage B (5.3) | Log extraction | Done (Nov 14) |
 | Stage C | LangGraph recovery graph, audit log, policy config, CLI | Done (Nov 16) |
-| Stage D | GitHub client: fetch a run's log and changes by run ID | In progress |
-| Stage E | LLM diagnosis with evidence citations | Planned |
+| Stage D | GitHub client: fetch a run's log and changes by run ID | Done (Nov 20) |
+| Stage E | LLM diagnosis with evidence citations | In progress |
 | Stage G | Patch generation and patch policy | Planned |
 | Stage H | Sandboxed validation | Planned |
 | Stage I | Draft pull request and human approval | Planned |
@@ -269,11 +279,24 @@ First, LangGraph's core ideas were practised in small throwaway programs: state,
 - **Runner and CLI**: `start_recovery()` and `resume_recovery()` use the `recovery_id` as LangGraph's `thread_id`; `python -m app.cli` runs a recovery by hand.
 - 20 tests: one per path through the graph, plus audit and isolation checks. All pass on real LangGraph.
 
+### Stage D: Reading failures from GitHub
+
+**Goal:** give the agent a run ID and let it fetch the evidence itself ([walkthrough](docs/stage_d_lesson7_github_client.md)).
+
+- **`GitHubClient`** (`app/github/client.py`): read-only calls for a run, its jobs, a job's log, a commit's changed files, and a comparison between two branches. Authenticates with a token passed in by the caller.
+- **Token safety:** the log endpoint redirects to a download link on another server. httpx drops the `Authorization` header on a cross-host redirect, so the token is only ever sent to `api.github.com`. A test proves it.
+- **Retries:** rate limits (429) and server errors (5xx) are retried after 1 s, 2 s and 4 s. Authentication and not-found errors (401, 403, 404) are never retried, because retrying cannot fix them.
+- **Input checks:** repository names, commit SHAs and branch names are validated before any URL is built, so a crafted value cannot redirect a request.
+- **Rebuilding step names:** GitHub's API returns a job's log **without** the job and step columns that the log extractor reads. Every step's output begins with `##[group]Run …`, `Post job cleanup.` or `Cleaning up orphan processes`, and skipped steps print nothing. `to_step_labelled_log` uses those markers and the jobs API's step list to put the step names back. Tests strip the columns from the three real logs and rebuild them **identically**; a further test uses a log recorded from the real API.
+- **Branch diff as evidence:** the changed files are added as `diff` evidence after the log evidence (redacted, at most 4,000 characters per file, within the evidence budget). The diff is compared against `main`, like a pull request, so a merge commit on a seed branch still shows the real bug. A failed diff download does not stop the recovery.
+- **CLI:** `python -m app.cli --run-id <id>` runs a recovery on a real failed run.
+- 32 new tests (30 for the client, 2 for diff evidence in the graph), using `httpx.MockTransport` as a fake GitHub, so no test touches the network.
+
 ---
 
 ## 7. Tests
 
-**88 tests**, all passing in CI.
+**120 tests**, all passing in CI.
 
 | Test file | Tests | What it covers |
 |---|---|---|
@@ -281,8 +304,9 @@ First, LangGraph's core ideas were practised in small throwaway programs: state,
 | `tests/unit/test_evidence_models.py` | 19 | Evidence IDs, hashing, immutability, size budget |
 | `tests/unit/test_redaction.py` | 23 | Every secret pattern, context kept, no false alarms on real logs |
 | `tests/unit/test_log_extract.py` | 25 | Parsing, first failed step, evidence content and size, merging, redaction, budget |
-| `tests/unit/test_graph.py` | 17 | Every path through the recovery graph ends in the right named state |
+| `tests/unit/test_graph.py` | 19 | Every path through the recovery graph ends in the right named state; diff evidence |
 | `tests/unit/test_audit.py` | 3 | Audit ordering, SQL-injection safety, persistence |
+| `tests/unit/test_github_client.py` | 30 | Requests, redirects, retries, input checks, step-label rebuilding, a recorded real API log |
 
 Practice used throughout: **break it on purpose.** After each step, a rule was deliberately broken (for example, removing `frozen=True`, or changing `>` to `>=` in the budget check) to confirm that exactly the expected test fails.
 
@@ -302,6 +326,10 @@ Practice used throughout: **break it on purpose.** After each step, a rule was d
 | Extracted evidence for the import failure missed key lines | Patterns required `ERROR` at the start of a line and `Error:` with a colon | Widened the patterns after reading the real output. Read real data before trusting code that reads it. |
 | Importing `app.tools` crashed | `from curses import echo` in two `__init__.py` files (a shell `echo` turned into Python) | Replaced with docstrings. It stayed hidden until something imported those packages. |
 | Ground truth listed one ruff error, but the log showed two | `import os` triggers both F401 and I001 | Updated case C01. Ground truth must be checked against real data too. |
+| The API's job log could not be read by the extractor | The API log has no job and step columns | Rebuilt the step labels from marker lines and the jobs API's step list, verified on all three real logs |
+| A seed branch's diff showed `ci.yml`, not the bug | The latest commit was a merge, whose diff only shows what the merge brought in | Compared the branch against `main` instead (`/compare/main...<sha>`) |
+| The recorded API log was empty | Newer `gh` versions refuse to print text containing terminal colour codes | Re-recorded with `gh api --allow-escape-sequences` |
+| `No module named 'app'` for every test | A new terminal used Anaconda's Python, not the project's virtual environment | `source .venv/bin/activate`; check the prompt shows `(.venv)` |
 
 ---
 
@@ -311,13 +339,12 @@ Practice used throughout: **break it on purpose.** After each step, a rule was d
 
 | Dates | Stage | Work |
 |---|---|---|
-| Nov 17–18 | D | GitHub client: fetch a failed run's log and changes by run ID |
-| Nov 19–20 | E | LLM diagnosis with cited evidence; fake model for tests; rule-based baseline kept |
-| Nov 21–22 | G | Patch generation (`ruff --fix` first for lint) and patch policy checks |
-| Nov 23–24 | H | Validation in a temporary copy at the exact failing commit, isolated from the network and secrets |
-| Nov 25 | I | Real draft pull request, PR template, stale-commit check |
-| Nov 26 | J | Webhook with signature verification and duplicate detection |
-| Nov 27–28 | K, L | About 10 benchmark cases, rules versus LLM, key security tests |
+| Nov 21–22 | E | LLM diagnosis with cited evidence; fake model for tests; rule-based baseline kept |
+| Nov 23–24 | G | Patch generation (`ruff --fix` first for lint) and patch policy checks |
+| Nov 25 | H | Validation in a temporary copy at the exact failing commit, isolated from the network and secrets |
+| Nov 26 | I | Real draft pull request, PR template, stale-commit check |
+| Nov 27 | J | Webhook with signature verification and duplicate detection |
+| Nov 28 | K, L | About 10 benchmark cases, rules versus LLM, key security tests |
 | Nov 29–Dec 1 | M | Report, slides, demo video |
 
 **Scope reduced for the deadline** (to be discussed in the final report):
@@ -340,4 +367,5 @@ Practice used throughout: **break it on purpose.** After each step, a rule was d
 | [`docs/phase5_2_redaction.md`](docs/phase5_2_redaction.md) | Secret redaction and regular expressions |
 | [`docs/phase5_3_log_extraction.md`](docs/phase5_3_log_extraction.md) | Log extraction, error signals, context regions |
 | [`docs/stage_c_lesson6_recovery_graph.md`](docs/stage_c_lesson6_recovery_graph.md) | The recovery graph, dependencies, audit log |
+| [`docs/stage_d_lesson7_github_client.md`](docs/stage_d_lesson7_github_client.md) | The GitHub client, step labels, branch diffs, token safety |
 | [`benchmark/cases/README.md`](benchmark/cases/README.md) | Ground truth for the seeded failures |
