@@ -180,3 +180,37 @@ def test_separate_recoveries_do_not_mix():
     assert a.waiting_for_approval
     assert b.status == RecoveryStatus.REJECTED_BY_REVIEWER
     assert b.state["run_id"] == 2
+
+
+# ---------- diff evidence (Stage D) ----------
+
+OPS_PATCH = (
+    "@@ -5,7 +5,7 @@\n"
+    "-def subtract(a: float, b: float) -> float:\n"
+    "+def subtact(a: float, b: float) -> float:"
+)
+
+
+def test_diff_is_added_after_the_log_evidence():
+    deps = full_deps(
+        "import_error",
+        fetch_diff=lambda repo, sha: [
+            {"filename": "src/calculator/ops.py", "status": "modified", "patch": OPS_PATCH},
+            {"filename": "logo.png", "status": "added", "patch": ""},  # binary: skipped
+        ],
+    )
+    result = run(deps, decision="approve")
+    items = result.state["evidence"]["items"]
+    assert [item["source"] for item in items] == ["log", "diff"]
+    assert items[1]["excerpt_id"] == "E2"
+    assert items[1]["location"] == "src/calculator/ops.py"
+    assert "def subtact" in items[1]["text"]
+
+
+def test_a_failing_diff_download_does_not_stop_the_recovery():
+    def broken(repo, sha):
+        raise ConnectionError("GitHub unreachable")
+
+    result = run(full_deps(fetch_diff=broken), decision="approve")
+    assert result.status == RecoveryStatus.DRAFT_PR_CREATED
+    assert [item["source"] for item in result.state["evidence"]["items"]] == ["log"] * 3

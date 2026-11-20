@@ -9,6 +9,7 @@ CONFIDENCE_THRESHOLD = 0.7
 
 # Evidence: the most text (in characters) that may be collected for one recovery.
 MAX_EVIDENCE_CHARS = 20_000
+MAX_DIFF_CHARS_PER_FILE = 4_000  # one changed file's patch, at most
 
 # Failure categories the agent may try to fix. Anything else gets a report only.
 SUPPORTED_CATEGORIES = frozenset({"lint", "syntax", "unit_test"})

@@ -22,9 +22,15 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.types import interrupt
 
 from app.agents.rule_diagnosis import rule_based_diagnose
-from app.models.evidence import EvidenceBundle
+from app.models.evidence import (
+    EvidenceBudgetExceeded,
+    EvidenceBundle,
+    EvidenceItem,
+    EvidenceSource,
+)
 from app.models.recovery import TERMINAL_STATUSES, RecoveryState, RecoveryStatus
-from app.policy.config import MAX_EVIDENCE_CHARS
+from app.policy.config import MAX_DIFF_CHARS_PER_FILE, MAX_EVIDENCE_CHARS
+from app.policy.redaction import redact
 from app.storage.audit import AuditLog
 from app.tools.log_extract import extract_failure
 
@@ -48,6 +54,8 @@ class Dependencies:
     """Functions the nodes call. Tests pass fakes; later stages pass the real ones."""
 
     fetch_log: Callable[[str, int], str]  # (repository, run_id) -> log text
+    # (repository, head_sha) -> [{"filename", "status", "patch"}]; None = no diff evidence
+    fetch_diff: Callable[[str, str], list[dict[str, Any]]] | None = None
     diagnose: Callable[[dict[str, Any], EvidenceBundle], dict[str, Any]] = rule_based_diagnose
     generate_patch: Callable[[RecoveryState], str | None] = _no_patch
     validate_patch: Callable[[RecoveryState, str], dict[str, Any]] = _not_validated
@@ -73,11 +81,43 @@ def collect_evidence(state: RecoveryState, deps: Dependencies) -> dict[str, Any]
         return update
 
     extract = extract_failure(log_text, bundle)
-    update["evidence"] = bundle.model_dump(mode="json")
-    update["extract"] = asdict(extract)
     if extract.failed_step is None:
         update["stop_reason"] = "no_failed_step_in_log"
+    elif deps.fetch_diff is not None:
+        try:
+            files = deps.fetch_diff(state["repository"], state["head_sha"])
+        except Exception:
+            files = []  # the diff is helpful, not essential: carry on with the log evidence
+        add_diff_evidence(bundle, files)
+    update["evidence"] = bundle.model_dump(mode="json")
+    update["extract"] = asdict(extract)
     return update
+
+
+def add_diff_evidence(bundle: EvidenceBundle, files: list[dict[str, Any]]) -> None:
+    """Add each changed file's patch as DIFF evidence, after the log evidence.
+
+    The log says where the error was REPORTED; the diff shows what CHANGED. For the
+    import failure they are different files, and the agent needs both.
+    """
+    for changed in files:
+        patch = (changed.get("patch") or "")[:MAX_DIFF_CHARS_PER_FILE]
+        if not patch.strip():
+            continue  # binary files and pure renames have no patch text
+        result = redact(patch)
+        item = EvidenceItem.create(
+            excerpt_id=f"E{len(bundle.items) + 1}",
+            source=EvidenceSource.DIFF,
+            location=changed["filename"],
+            start_line=1,
+            end_line=max(1, len(result.text.splitlines())),
+            text=result.text,
+            redacted=result.redacted,
+        )
+        try:
+            bundle.add(item)
+        except EvidenceBudgetExceeded:
+            return  # the log evidence matters most; stop adding when the budget is full
 
 
 def diagnose_failure(state: RecoveryState, deps: Dependencies) -> dict[str, Any]:
